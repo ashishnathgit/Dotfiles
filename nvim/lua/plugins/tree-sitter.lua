@@ -1,42 +1,52 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
-  config = function () 
-    local configs = require("nvim-treesitter.configs")
+	"nvim-treesitter/nvim-treesitter",
+	branch = "main",
+	build = ":TSUpdate",
+	config = function()
+		require("nvim-treesitter").install({
+			"sql",
+			"tmux",
+			"toml",
+			"typescript",
+			"php",
+			"c",
+			"lua",
+			"vim",
+			"vimdoc",
+			"query",
+			"elixir",
+			"heex",
+			"javascript",
+			"html",
+			"yaml",
+		})
 
-    configs.setup({
-      ensure_installed = { 
-        "sql", 
-        "tmux", 
-        "toml", 
-        "typescript", 
-        "php", 
-        "c", 
-        "lua", 
-        "vim", 
-        "vimdoc", 
-        "query", 
-        "elixir", 
-        "heex", 
-        "javascript", 
-        "html",
-        "yaml",
-        "vim"
-      },
-      auto_install = false,
-      sync_install = false,
-      highlight = { enable = true },
-      indent = { enable = true },  
+		local ft_list = {
+			"sql",
+			"tmux",
+			"toml",
+			"typescript",
+			"php",
+			"c",
+			"lua",
+			"vim",
+			"vimdoc",
+			"query",
+			"elixir",
+			"heex",
+			"javascript",
+			"html",
+			"yaml",
+		}
 
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<Enter>", -- set to `false` to disable one of the mappings
-          node_incremental = "<Enter>",
-          scope_incremental = "false",
-          node_decremental = "<Backspace>",
-        },
-      },
-    })
-  end
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = ft_list,
+			callback = function()
+				vim.treesitter.start()
+				vim.wo.foldmethod = "expr"
+				vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end,
+		})
+	end,
 }

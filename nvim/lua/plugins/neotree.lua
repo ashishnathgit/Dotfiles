@@ -7,9 +7,12 @@ return {
 			"MunifTanjim/nui.nvim",
 			"nvim-tree/nvim-web-devicons",
 		},
+
 		config = function()
 			require("neo-tree").setup({
+
 				filesystem = {
+
 					follow_current_file = {
 						enabled = true,
 					},

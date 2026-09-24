@@ -3,7 +3,7 @@
 size = 22.0
 
 [font.normal]
-family = "SFMono Nerd Font"
+family = "Menlo"
 style = "Regular"
 
 [window]

@@ -1,65 +1,31 @@
 return {
 	{
-		"catppuccin/nvim",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- make sure to load this before all the other start plugins
+		"Mofiqul/vscode.nvim",
+		lazy = false, -- Make sure we load this during startup as your main colorscheme
+		priority = 1000, -- Make sure to load this before all the other start plugins
 		config = function()
-			require("catppuccin").setup({
-				flavour = "auto", -- latte, frappe, macchiato, mocha
-				background = { -- :h background
-					light = "latte",
-					dark = "mocha",
-				},
-				transparent_background = false, -- disables setting the background color.
-				show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-				term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-				dim_inactive = {
-					enabled = false, -- dims the background color of inactive window
-					shade = "dark",
-					percentage = 0.15, -- percentage of the shade to apply to the inactive window
-				},
-				no_italic = false, -- Force no italic
-				no_bold = false, -- Force no bold
-				no_underline = false, -- Force no underline
-				styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-					comments = { "italic" }, -- Change the style of comments
-					conditionals = { "italic" },
-					loops = {},
-					functions = {},
-					keywords = {},
-					strings = {},
-					variables = {},
-					numbers = {},
-					booleans = {},
-					properties = {},
-					types = {},
-					operators = {},
-					-- miscs = {}, -- Uncomment to turn off hard-coded styles
-				},
-				color_overrides = {
-					mocha = {
-						base = "#000000",
-						mantle = "#000000",
-						crust = "#000000",
-					},
-				},
-				custom_highlights = {},
-				default_integrations = true,
-				integrations = {
-					cmp = true,
-					gitsigns = true,
-					nvimtree = true,
-					treesitter = true,
-					notify = false,
-					mini = {
-						enabled = true,
-						indentscope_color = "",
-					},
+			require("vscode").setup({
+				-- Options: "dark" or "light" (Matches modern VS Code Dark Plus perfectly)
+				style = "dark",
+
+				-- Style adaptations mirroring standard IDE layouts
+				transparent = false,
+				clear_in_editor = true,
+				italic_comments = true,
+
+				-- UI element highlights to ensure seamless integration with your custom tabs/trees
+				underline_links = true,
+				disable_nvimtree_bg = true, -- Ensures your neo-tree panel background color stays unified
+
+				-- Enables rich syntax color groups across your installed plugins ecosystem
+				group_overrides = {
+					-- Connects vibrant diagnostics colors seamlessly into your bufferline setup
+					BufferLineIndicatorSelected = { fg = "#007ACC" },
 				},
 			})
 
-			-- setup must be called before loading
-			vim.cmd([[colorscheme catppuccin]])
+			-- Setup must be executed before loading the theme environment
+			require("vscode").load()
 		end,
 	},
 }

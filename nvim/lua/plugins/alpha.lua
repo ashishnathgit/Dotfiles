@@ -20,7 +20,9 @@ return {
 			}
 
 			dashboard.section.buttons.val = {
-				dashboard.button("f", "󰈞  Find file", ":FzfLua files<CR>"),
+				dashboard.button("f", "󰈞  Find file", function()
+					require("fzf-lua").files()
+				end),
 				dashboard.button("e", "  New file", ":ene <BAR> startinsert<CR>"),
 				dashboard.button("r", "  Recently used files", ":FzfLua oldfiles<CR>"),
 				dashboard.button("t", "  Find text", ":FzfLua live_grep<CR>"),

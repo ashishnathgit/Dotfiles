@@ -41,7 +41,20 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = ": ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "→ ", trail = "·", nbsp = "␣" }
 
 --Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 5
+
+-------------------------------------------------------------------------------
+-- VS CODE STYLE EXTENSIONS
+-------------------------------------------------------------------------------
+-- Completely disable code folding / line hiding features
+vim.opt.foldenable = false
+
+-- Set fold level to a high ceiling so text layers stay completely open
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+
+-- Set fold calculation mode to manual to block external plugins from collapsing blocks
+vim.opt.foldmethod = "manual"

@@ -6,7 +6,7 @@ Personal configuration files for a highly optimized development environment on m
 
 ### **Terminal & Shell**
 - **Alacritty** — GPU-accelerated terminal emulator
-- **iTerm2** — Alternative macOS terminal with advanced features
+- **Zsh** — Oh My Zsh + Starship prompt
 - **Tmux** — Terminal multiplexer for session management
 - **Neofetch** — System info display in style
 
@@ -27,39 +27,43 @@ Personal configuration files for a highly optimized development environment on m
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install required tools
-brew install alacritty tmux neovim tmux gh htop neofetch
+brew install alacritty tmux neovim gh htop neofetch starship
+
+# Install Oh My Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
 ### Installation
 
-```bash
-# Clone the dotfiles repo
-git clone https://github.com/yourusername/dotfiles ~/.dotfiles
-cd ~/.dotfiles
+This repo *is* `~/.config`, so most tools (Alacritty, tmux, Neovim, Starship, git, gh) find their config automatically.
 
-# Create symlinks for configuration files
-# (Or copy individual configs as needed)
-ln -s ~/.dotfiles/alacritty ~/.config/alacritty
-ln -s ~/.dotfiles/nvim ~/.config/nvim
-ln -s ~/.dotfiles/tmux ~/.tmux.conf
-ln -s ~/.dotfiles/iterm2 ~/.iterm2  # Optional for macOS
+```bash
+# Back up any existing config, then clone the repo into ~/.config
+mv ~/.config ~/.config.bak 2>/dev/null
+git clone https://github.com/ashishnathgit/Dotfiles.git ~/.config
+
+# Zsh only reads ~/.zshrc, so link it
+mv ~/.zshrc ~/.zshrc.bak 2>/dev/null   # the Oh My Zsh installer creates one
+ln -s ~/.config/zsh/.zshrc ~/.zshrc
 ```
 
-**Note:** Each tool has its own `README.md` with detailed setup instructions.
+tmux installs TPM and its plugins automatically the first time it starts.
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-dotfiles/
+~/.config/
 ├── alacritty/           # Terminal emulator config
-├── tmux/                # Terminal multiplexer config
+├── tmux/                # Terminal multiplexer config (plugins installed by TPM)
+├── zsh/.zshrc           # Shell config (symlinked to ~/.zshrc)
+├── starship.toml        # Prompt config
+├── git/                 # Git config + global ignore
 ├── nvim/                # Neovim editor config
 │   └── README.md        # Neovim setup guide
 ├── gh/                  # GitHub CLI config
 ├── htop/                # System monitor config
-├── iterm2/              # macOS terminal (optional)
 ├── neofetch/            # System info config
 ├── .gitignore           # Git ignore rules
 └── README.md            # This file
@@ -74,7 +78,7 @@ Modern GPU-accelerated terminal with:
 - Catpuccin theme
 - Custom keybindings
 - Performance optimizations
-- See `alacritty/README.md` for details
+- See `alacritty/Readme.md` for details
 
 ### **Tmux** (`tmux/`)
 Terminal multiplexer for managing sessions:
@@ -82,7 +86,6 @@ Terminal multiplexer for managing sessions:
 - Plugins (TPM - Tmux Plugin Manager)
 - Status bar customization
 - Window/pane management
-- See `tmux/README.md` for details
 
 ### **Neovim** (`nvim/`)
 Full-featured code editor with:
@@ -109,12 +112,6 @@ Beautiful system information display:
 - Custom ASCII art
 - System stats formatting
 
-### **iTerm2** (`iterm2/`) — macOS only
-Native macOS terminal:
-- Color schemes
-- Profiles
-- Keybindings
-
 ---
 
 ## ⌨️ Key Workflows
@@ -124,17 +121,18 @@ Native macOS terminal:
 # Start new tmux session
 tmux new-session -s dev
 
+# Prefix is Ctrl-a
 # Split pane horizontally
-Ctrl-b %
+Ctrl-a %
 
-# Split pane vertically  
-Ctrl-b "
+# Split pane vertically
+Ctrl-a "
 
-# Switch between panes
-Ctrl-b arrow-keys
+# Switch between panes (also works across Neovim splits)
+Ctrl-h / Ctrl-j / Ctrl-k / Ctrl-l
 
 # Create new window
-Ctrl-b c
+Ctrl-a c
 ```
 
 ### **Neovim + LSP**
@@ -184,8 +182,6 @@ Each tool can be customized independently:
 - **Keybindings** — Edit respective config files
 - **Plugins** — Install additional plugins as needed
 
-See individual `README.md` files for tool-specific customization.
-
 ---
 
 ## 📝 Individual Tool Guides
@@ -194,13 +190,9 @@ Detailed setup instructions for each tool:
 
 | Tool | File | Setup |
 |------|------|-------|
-| Alacritty | `alacritty/README.md` | Terminal config |
-| Tmux | `tmux/README.md` | Multiplexer setup |
+| Alacritty | `alacritty/Readme.md` | Terminal config |
 | Neovim | `nvim/README.md` | Editor & LSP config |
-| GitHub CLI | `gh/README.md` | CLI authentication |
-| htop | `htop/README.md` | Process monitor |
 | Neofetch | `neofetch/README.md` | System info display |
-| iTerm2 | `iterm2/README.md` | macOS terminal |
 
 ---
 
@@ -248,7 +240,7 @@ Detailed setup instructions for each tool:
 
 3. **Track changes to dotfiles:**
    ```bash
-   cd ~/.dotfiles
+   cd ~/.config
    git status
    git add -A && git commit -m "Update configs"
    ```

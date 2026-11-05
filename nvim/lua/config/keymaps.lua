@@ -19,3 +19,5 @@ vim.keymap.set("n", "<leader>ch", ":cd ~<CR>", { noremap = true, silent = true }
 
 -- Jump to Leetcode folder
 vim.keymap.set("n", "<leader>lc", ":cd ~/Documents/GitHub/Leetcode<CR>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<CR>", { noremap = true, silent = true })

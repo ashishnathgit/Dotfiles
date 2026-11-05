@@ -1,1 +1,4 @@
 .DS_Store
+
+# Installed by TPM, not tracked
+tmux/plugins/
